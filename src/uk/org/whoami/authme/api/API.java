@@ -186,8 +186,9 @@ public class API {
      * @return
      */
     public static boolean activateUser(String playerName, String key){
+    	System.out.println("activating Users");
     	PlayerAuth auth = new PlayerAuth(playerName, "dsds", "198.18.0.1", 0);
     	auth.setActivationKey(key);
-    	return database.doActivation(auth);	
+    	return database.doActivation(auth);
     }
 }

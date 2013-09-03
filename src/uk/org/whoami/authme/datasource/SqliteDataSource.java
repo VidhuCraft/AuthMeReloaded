@@ -558,6 +558,7 @@ public class SqliteDataSource implements DataSource {
 	
 	@Override
 	public synchronized boolean doActivation(PlayerAuth auth){
+		System.out.println("activating user in sqlitedb!");
 		if(getActivationkey(auth).equals(auth.getActivationKey())){
 			auth.setIsActivated(1);
 			this.updateisActivated(auth);
