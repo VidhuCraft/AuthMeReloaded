@@ -1,6 +1,7 @@
 # Project files #
 ############
 /bin
+/lib
 /.settings
 .project
 
