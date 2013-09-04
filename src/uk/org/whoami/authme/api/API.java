@@ -1,6 +1,7 @@
 package uk.org.whoami.authme.api;
 
 import java.security.NoSuchAlgorithmException;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -130,7 +131,7 @@ public class API {
 			return false;
 		}
     }
-
+    
     /**
      * Register a player
      * @param String playerName, String password
@@ -151,6 +152,18 @@ public class API {
         } catch (NoSuchAlgorithmException ex) {
         	return false;
         }
+    }
+    
+    /**
+     * Sets a player's email address if he is registered
+     * @param String playerName, String email
+     * @return true if no errors occurred. NOTE: If user doesn't exist. True will still be returned
+     */
+    public static boolean setPlayerEmail(String playerName, String email){
+    	String name = playerName.toLowerCase();
+    	
+    	PlayerAuth auth = new PlayerAuth(name, null, null, 0, email);
+    	return database.updateEmail(auth);
     }
 
 }
