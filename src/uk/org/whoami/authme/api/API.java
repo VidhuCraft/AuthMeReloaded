@@ -157,7 +157,7 @@ public class API {
     /**
      * Sets a player's email address if he is registered
      * @param String playerName, String email
-     * @return true if no errors occurred. NOTE: If user doesn't exist. True will still be returned
+     * @return true if no errors occurred. If user doesn't exist. True will still be returned
      */
     public static boolean setPlayerEmail(String playerName, String email){
     	String name = playerName.toLowerCase();
