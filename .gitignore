@@ -1,8 +1,8 @@
 # Project files #
 ############
-/bin
-/lib
-/.settings
+bin/
+lib/
+.settings/
 .project
 
 # Compiled source #
