@@ -13,6 +13,7 @@ lib/
 *.exe
 *.o
 *.so
+*.classpath
 
 # Packages #
 ############
