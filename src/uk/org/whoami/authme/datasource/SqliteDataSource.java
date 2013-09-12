@@ -337,7 +337,7 @@ public class SqliteDataSource implements DataSource {
         PreparedStatement pst = null;
         try {
             pst = con.prepareStatement("UPDATE " + tableName + " SET " + columnisActivated + "=? WHERE " + columnName + "=?;");
-            pst.setLong(1, auth.getIsActivated());
+            pst.setInt(1, auth.getIsActivated());
             pst.setString(2, auth.getNickname());
             pst.executeUpdate();
         } catch (SQLException ex) {
@@ -574,18 +574,10 @@ public class SqliteDataSource implements DataSource {
         ResultSet rs = null;
         try {
             pst = con.prepareStatement("SELECT * FROM " + tableName + " WHERE "
-                    + columnName + "=?;");
+                    + columnName + "=? and isActivated = 1;");
             pst.setString(1, username);
             rs = pst.executeQuery();
-            if (rs.next()) {
-            	if(rs.getInt(columnisActivated) == 1){
-            		return true;
-            	}else{
-            		return false;
-            	}
-            } else {
-                return false;
-            }
+            return rs.next();
         } catch (SQLException ex) {
             ConsoleLogger.showError(ex.getMessage());
             return false;
