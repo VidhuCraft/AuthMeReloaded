@@ -112,7 +112,7 @@ public class API {
      * @return true if the password is correct , false else
      */
     public static boolean checkPassword(String playerName, String passwordToCheck) {
-    	if (!isRegistered(playerName)) return false;
+    	if (!isRegistered(playerName.toLowerCase())) return false;
     	String player = playerName.toLowerCase();
     	PlayerAuth auth = database.getAuth(player);
     	try {
@@ -165,7 +165,7 @@ public class API {
     	String hash = uuid.toString(); 	
     	String name = playerName.toLowerCase();
     	
-    	PlayerAuth auth = new PlayerAuth(name, hash, "198.18.0.1", 0);
+    	PlayerAuth auth = new PlayerAuth(name.toLowerCase(), hash, "198.18.0.1", 0);
     	auth.setActivationKey(hash);
     	
     	if(!database.updateActivationKey(auth)){
@@ -176,7 +176,7 @@ public class API {
     }
     
     public static boolean isActivated(String username){
-    	return database.isActivated(username);
+    	return database.isActivated(username.toLowerCase());
     }
     
     /**
@@ -187,7 +187,7 @@ public class API {
      */
     public static boolean activateUser(String playerName, String key){
     	System.out.println("activating Users");
-    	PlayerAuth auth = new PlayerAuth(playerName, "dsds", "198.18.0.1", 0);
+    	PlayerAuth auth = new PlayerAuth(playerName.toLowerCase(), "dsds", "198.18.0.1", 0);
     	auth.setActivationKey(key);
     	return database.doActivation(auth);
     }

@@ -559,7 +559,7 @@ public class SqliteDataSource implements DataSource {
 	@Override
 	public synchronized boolean doActivation(PlayerAuth auth){
 		System.out.println("activating user in sqlitedb!");
-		if(getActivationkey(auth).equals(auth.getActivationKey())){
+		if(getActivationkey(auth).equalsIgnoreCase(auth.getActivationKey())){
 			auth.setIsActivated(1);
 			this.updateisActivated(auth);
 			return true;
@@ -570,6 +570,7 @@ public class SqliteDataSource implements DataSource {
 
 	@Override
 	public boolean isActivated(String username) {
+		username = username.toLowerCase();
 		PreparedStatement pst = null;
         ResultSet rs = null;
         try {
