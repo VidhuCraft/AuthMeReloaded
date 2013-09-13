@@ -165,7 +165,7 @@ public class API {
     	String hash = uuid.toString(); 	
     	String name = playerName.toLowerCase();
     	
-    	PlayerAuth auth = new PlayerAuth(name.toLowerCase(), hash, "198.18.0.1", 0);
+    	PlayerAuth auth = new PlayerAuth(name, hash, "198.18.0.1", 0);
     	auth.setActivationKey(hash);
     	
     	if(!database.updateActivationKey(auth)){
