@@ -70,5 +70,7 @@ public interface DataSource {
 	String getActivationkey(PlayerAuth auth);
 
 	boolean isActivated(String username);
+	
+	int getEmailCount(String email);
 
 }

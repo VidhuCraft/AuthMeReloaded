@@ -745,6 +745,36 @@ public class MySQLThread extends Thread implements DataSource {
             close(con);
         }
 	}
+	
+	@Override
+	public int getEmailCount(String email){
+		Connection con = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		int count = -1;
+		
+		con = conPool.getValidConnection();
+		try {
+			pst = con.prepareStatement("SELECT COUNT(*) FROM " + tableName + " WHERE "
+			        + columnEmail + "=? and isActivated = 1;");
+			pst.setString(1, email);
+			rs = pst.executeQuery();
+			if (rs.next()) {
+				count = rs.getInt(0);
+			}
+		} catch (SQLException ex) {
+            ConsoleLogger.showError(ex.getMessage());
+            return -1;
+        } catch (TimeoutException ex) {
+            ConsoleLogger.showError(ex.getMessage());
+            return -1;
+        } finally {
+            close(rs);
+            close(pst);
+            close(con);
+        }
+		return count;
+	}
     
 /*    public synchronized boolean makeSureConnectionIsReady() {
         try {

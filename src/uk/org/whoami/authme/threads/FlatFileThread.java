@@ -527,4 +527,10 @@ public class FlatFileThread extends Thread implements DataSource {
 				"This operation is not valid for file datasource. Please use SQL type db");
 	}
 
+	@Override
+	public int getEmailCount(String email) {
+		throw new UnsupportedOperationException(
+				"This operation is not valid for file datasource. Please use SQL type db");
+	}
+
 }

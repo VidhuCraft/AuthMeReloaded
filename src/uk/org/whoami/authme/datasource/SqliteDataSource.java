@@ -587,4 +587,30 @@ public class SqliteDataSource implements DataSource {
             close(pst);
         }
 	}
+	
+	@Override
+	public int getEmailCount(String email){
+		email = email.toLowerCase();
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		int count = -1;
+		
+		try{
+			pst = con.prepareStatement("SELECT COUNT(*) as Count FROM " + tableName + " WHERE "
+					+ columnEmail + " = ? and isActivated = 1;");
+			pst.setString(1, email);
+			rs = pst.executeQuery();
+			if(rs.next()){
+				count = rs.getInt("Count");
+			}
+		} catch (SQLException ex){
+			ConsoleLogger.showError(ex.getMessage());
+			return -1;
+		} finally {
+			close(rs);
+			close(pst);
+		}
+		
+		return count;
+	}
 }

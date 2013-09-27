@@ -602,4 +602,24 @@ public class SQLiteThread extends Thread implements DataSource {
             close(pst);
         }
 	}
+	
+	@Override
+	public int getEmailCount(String email){
+		email = email.toLowerCase();
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		try{
+			pst = con.prepareStatement("SELECT COUNT(*) FROM " + tableName + " WHERE"
+					+ columnEmail + "=? and isActivated = 1;");
+			pst.setString(1, email);
+			rs = pst.executeQuery();
+			return rs.getInt(0);
+		} catch (SQLException ex){
+			ConsoleLogger.showError(ex.getMessage());
+			return -1;
+		} finally {
+			close(rs);
+			close(pst);
+		}
+	}
 }

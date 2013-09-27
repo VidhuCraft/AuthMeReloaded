@@ -218,4 +218,9 @@ public class CacheDataSource implements DataSource {
 				"Please diable cache for activation to work");
 	}
 
+	@Override
+	public int getEmailCount(String email){
+		throw new UnsupportedOperationException(
+				"Please diable cache for activation to work");
+	}
 }

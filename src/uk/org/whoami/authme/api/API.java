@@ -40,7 +40,8 @@ public class API {
     	return (AuthMe) plugin;
     }
 
-    public AuthMe getPlugin() {
+
+	public AuthMe getPlugin() {
     	return instance;
     }
 
@@ -190,5 +191,10 @@ public class API {
     	PlayerAuth auth = new PlayerAuth(playerName.toLowerCase(), "dsds", "198.18.0.1", 0);
     	auth.setActivationKey(key);
     	return database.doActivation(auth);
+    }
+    
+    public static int getEmailCount(String email){
+    	System.out.println("Getting email count");
+    	return database.getEmailCount(email);
     }
 }
