@@ -146,9 +146,16 @@ public class SQLiteThread extends Thread implements DataSource {
 
     @Override
     public synchronized boolean isAuthAvailable(String user) {
+    	PreparedStatement removeUser = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
         try {
+        	//Remove any user's who arent activated
+        	removeUser = con.prepareStatement("DELETE FROM " + tableName + " WHERE "
+        			+ columnName + " = ? AND isActivated = 0 ;");
+        	removeUser.setString(1, user);
+        	removeUser.executeUpdate();
+        	
             pst = con.prepareStatement("SELECT * FROM " + tableName + " WHERE " + columnName + "=?");
             pst.setString(1, user);
             rs = pst.executeQuery();
@@ -606,9 +613,17 @@ public class SQLiteThread extends Thread implements DataSource {
 	@Override
 	public int getEmailCount(String email){
 		email = email.toLowerCase();
+		PreparedStatement removeEmail = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 		try{
+			//Remove all unactivate accoutn with email
+			removeEmail = con.prepareStatement("DELETE FROM " + tableName + " WHERE "
+        			+ columnEmail + " = ? AND isActivated = 0 ;");
+			removeEmail.setString(1, email);
+			removeEmail.executeUpdate();
+			
+			//Count emails
 			pst = con.prepareStatement("SELECT COUNT(*) FROM " + tableName + " WHERE"
 					+ columnEmail + "=? and isActivated = 1;");
 			pst.setString(1, email);

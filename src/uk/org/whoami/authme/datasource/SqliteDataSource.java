@@ -127,10 +127,17 @@ public class SqliteDataSource implements DataSource {
 
     @Override
     public synchronized boolean isAuthAvailable(String user) {
+    	PreparedStatement removeUser = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
         try {
-            pst = con.prepareStatement("SELECT * FROM " + tableName + " WHERE " + columnName + "=?");
+        	//Remove any user's who arent activated
+        	removeUser = con.prepareStatement("DELETE FROM " + tableName + " WHERE "
+        			+ columnName + " = ? AND isActivated = 0 ;");
+        	removeUser.setString(1, user);
+        	removeUser.executeUpdate();
+        	
+            pst = con.prepareStatement("SELECT * FROM " + tableName + " WHERE " + columnName + "= ? ;");
             pst.setString(1, user);
             rs = pst.executeQuery();
             return rs.next();
@@ -139,6 +146,7 @@ public class SqliteDataSource implements DataSource {
             return false;
         } finally {
             close(rs);
+            close(removeUser);
             close(pst);
         }
     }
@@ -591,11 +599,19 @@ public class SqliteDataSource implements DataSource {
 	@Override
 	public int getEmailCount(String email){
 		email = email.toLowerCase();
+		PreparedStatement removeEmail = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 		int count = -1;
 		
 		try{
+			//Remove all unactivate accoutn with email
+			removeEmail = con.prepareStatement("DELETE FROM " + tableName + " WHERE "
+        			+ columnEmail + " = ? AND isActivated = 0 ;");
+			removeEmail.setString(1, email);
+			removeEmail.executeUpdate();
+			
+			//Count emails
 			pst = con.prepareStatement("SELECT COUNT(*) as Count FROM " + tableName + " WHERE "
 					+ columnEmail + " = ? and isActivated = 1;");
 			pst.setString(1, email);
