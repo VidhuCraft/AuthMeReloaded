@@ -271,6 +271,7 @@ public class SqliteDataSource implements DataSource {
             pst = con.prepareStatement("DELETE FROM " + tableName + " WHERE " + columnName + "=?;");
             pst.setString(1, user);
             pst.executeUpdate();
+            System.out.println("Removed user: " + user);
         } catch (SQLException ex) {
             ConsoleLogger.showError(ex.getMessage());
             return false;
