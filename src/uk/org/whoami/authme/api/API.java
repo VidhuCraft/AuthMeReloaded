@@ -9,8 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
-import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
-
 import uk.org.whoami.authme.AuthMe;
 import uk.org.whoami.authme.Utils;
 import uk.org.whoami.authme.cache.auth.PlayerAuth;
@@ -152,6 +150,11 @@ public class API {
         } catch (NoSuchAlgorithmException ex) {
         	return false;
         }
+    }
+    
+    public static boolean deleteUser(String playername){
+    	String name = playername.toLowerCase();
+		return database.removeAuth(name);
     }
     
     /**
